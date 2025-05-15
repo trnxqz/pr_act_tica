@@ -1,157 +1,668 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>eLearning CUTM</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Courier New", monospace;
+        margin: 0;
+        padding: 0;
+        background: #fff;
+        color: #222;
+        transition: background 0.3s, color 0.3s;
+      }
+      body.dark-theme {
+        background: #191a1e;
+        color: #e0e0e0;
+      }
+      body.dark-theme .navbar,
+      body.dark-theme .dropdown-content,
+      body.dark-theme .dropdown-menu,
+      body.dark-theme .language-options,
+      body.dark-theme .category-item {
+        background-color: #23242a !important;
+        color: #e0e0e0 !important;
+      }
+      body.dark-theme .footer-container,
+      body.dark-theme .footer-bottom {
+        background-color: #1c1d21 !important; /* fundal footer dark fără #23242a */
+        color: #e0e0e0 !important;
+      }
+      body.dark-theme .search-box {
+        background: #23242a;
+        color: #e0e0e0;
+        border: 1px solid #444;
+      }
+      body.dark-theme .nav-links ul li a,
+      body.dark-theme .nav-links ul li a:hover {
+        color: #e0e0e0 !important;
+      }
+      body.dark-theme .footer-links ul li a,
+      body.dark-theme .footer-programs ul li a {
+        color: #e0e0e0;
+      }
+      body.dark-theme .footer-links ul li a:hover,
+      body.dark-theme .footer-programs ul li a:hover {
+        color: #fd973d;
+      }
+      body.dark-theme .footer-contact p {
+        color: #e0e0e0;
+      }
+      body.dark-theme .footer-social a {
+        color: #e0e0e0;
+      }
+      body.dark-theme .footer-social a:hover {
+        color: #fd792e;
+      }
+      body.dark-theme .marquee-container {
+        background: #15161b;
+        color: #fff;
+      }
+      body.dark-theme .category-item {
+        background: #292a33;
+        border-color: #222;
+      }
+      body.dark-theme .dropdown-content,
+      body.dark-theme .dropdown-menu,
+      body.dark-theme .language-options {
+        background: #23242a;
+      }
+      body.dark-theme .dropdown-content a,
+      body.dark-theme .dropdown-menu a,
+      body.dark-theme .language-options a {
+        color: #e0e0e0;
+      }
+      body.dark-theme .dropdown-content a:hover,
+      body.dark-theme .dropdown-menu a:hover,
+      body.dark-theme .language-options a:hover {
+        background: #292a33;
+        color: #fd973d;
+      }
+      body.dark-theme .search-box {
+        border: 1px solid #333;
+      }
+      body.dark-theme .moldova-eu-button {
+        background: #00305f;
+      }
+      body.dark-theme .moldova-eu-button:hover {
+        background: #001f38;
+      }
+
+      /* Ajustare linie subtire footer social în dark */
+      body.dark-theme .footer-bottom {
+        border-top: 1px solid #1c1d21; /* linie foarte închisă */
+        text-align: center;
+        margin-top: 20px;
+      }
+      body.dark-theme .footer-social a {
+        color: #e0e0e0;
+        transition: color 0.3s ease;
+      }
+      body.dark-theme .footer-social a:hover {
+        color: #fd792e;
+      }
+
+      /* Bara text mișcător sus */
+      .marquee-container {
+        background-color: #23557d;
+        color: white;
+        overflow: hidden;
+        white-space: nowrap;
+        box-sizing: border-box;
+        padding: 10px 0;
+        font-family: "Courier New", monospace;
+        font-weight: 700;
+        font-size: 18px;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 10001;
+      }
+      .marquee-content {
+        display: inline-block;
+        padding-left: 100%;
+        animation: marqueeAnim 20s linear infinite;
+      }
+      .marquee-content i {
+        margin: 0 12px;
+        vertical-align: middle;
+      }
+      .marquee-content i.fa-arrow-up-right-from-square {
+        color: #0081ff;
+      }
+      .marquee-content i.fa-chart-simple {
+        color: #000000;
+      }
+      @keyframes marqueeAnim {
+        0% { transform: translateX(0%);}
+        100% { transform: translateX(-100%);}
+      }
+
+      /* restul CSS-ului rămâne neschimbat */
+
+      .login-register { font-size: 18px; font-weight: bold; color: #000; cursor: pointer; text-decoration: none; }
+      .login-register:hover { text-decoration: underline; }
+      .dropdown { position: relative; display: inline-block; }
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        padding: 10px;
+        font-family: Arial, sans-serif;
+        border-radius: 5px;
+      }
+      .dropdown:hover .dropdown-content { display: block; }
+      .dropdown-content a {
+        color: #333;
+        padding: 8px 12px;
+        text-decoration: none;
+        display: block;
+        font-size: 16px;
+      }
+      .dropdown-content a:hover { background-color: #ddd; }
+      .language-select {
+        display: inline-block;
+        position: relative;
+        cursor: pointer;
+        padding: 5px;
+      }
+      .language-select img {
+        width: 30px;
+        height: 20px;
+        border-radius: 3px;
+      }
+      .language-options {
+        display: none;
+        position: absolute;
+        top: 35px;
+        right: 0;
+        background-color: #f1f1f1;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        padding: 10px;
+        font-family: Arial, sans-serif;
+        border-radius: 5px;
+      }
+      .language-select:hover .language-options { display: block; }
+      .language-options a {
+        padding: 8px 12px;
+        text-decoration: none;
+        display: block;
+        font-size: 16px;
+      }
+      .language-options a:hover { background-color: #ddd; }
+
+      /* FLOATING NAVIGATION BAR */
+      .navbar {
+        background-color: #f9f9f9;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 40px; /* sub bara text mișcător */
+        left: 0;
+        width: 100%;
+        z-index: 10000;
+        transition: box-shadow 0.2s;
+      }
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        display: flex;
+        align-items: center;
+      }
+      .logo i { margin-right: 8px; color: #fd792e; }
+      .nav-links ul { list-style-type: none; padding: 0; margin: 0; display: flex; }
+      .nav-links ul li { margin-right: 20px; }
+      .nav-links ul li a {
+        text-decoration: none;
+        color: #333;
+        font-size: 18px;
+        font-weight: bold;
+      }
+      .nav-links ul li a:hover { color: #fd973d; }
+      .search-icon { display: flex; align-items: center; }
+      .search-icon i { color: #333; font-size: 18px; margin-right: 8px; }
+      .search-box {
+        padding: 5px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+      .moldova-eu-button {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        display: inline-block;
+        background-color: #0065b3;
+        color: #fff;
+        font-size: 0;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        z-index: 9999;
+      }
+      .moldova-eu-button img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
+      .moldova-eu-button:hover {
+        background-color: #004e8c;
+        transform: scale(1.1);
+      }
+      .user-menu {
+        position: relative;
+        display: inline-block;
+        padding: 10px;
+      }
+      .user-menu img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 50px;
+        right: 0;
+        background-color: #ffffff;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        border-radius: 5px;
+        min-width: 200px;
+      }
+      .user-menu:hover .dropdown-menu { display: block; }
+      .dropdown-menu a {
+        padding: 12px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        color: #333;
+        font-size: 16px;
+      }
+      .dropdown-menu a:hover { background-color: #f1f1f1; }
+      .dropdown-menu a .menu-icon { width: 20px; height: 20px; margin-right: 10px; }
+      footer {
+        background-color: #f5f5f5;
+        color: #333;
+        padding: 40px 20px;
+        font-family: Arial, sans-serif;
+      }
+      .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+      }
+      .footer-left { flex: 1 1 300px; }
+      .footer-left .logo {
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+        font-weight: bold;
+        color: #fda140;
+        margin-bottom: 15px;
+      }
+      .footer-left .logo i { margin-right: 8px; }
+      .footer-left p { line-height: 1.6; color: #555; }
+      .footer-right {
+        flex: 2 1 600px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .footer-links,
+      .footer-programs,
+      .footer-contact {
+        flex: 1 1 180px;
+        margin-bottom: 20px;
+      }
+      .footer-links h3,
+      .footer-programs h3,
+      .footer-contact h3 {
+        color: #fd792e;
+        font-weight: 700;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+      }
+      .footer-links ul,
+      .footer-programs ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .footer-links ul li,
+      .footer-programs ul li {
+        margin-bottom: 8px;
+      }
+      .footer-links ul li a,
+      .footer-programs ul li a {
+        color: #333;
+        text-decoration: none;
+      }
+      .footer-links ul li a:hover,
+      .footer-programs ul li a:hover {
+        color: #fd973d;
+      }
+      .footer-contact p { margin: 5px 0; color: #333; }
+      .footer-bottom { text-align: center; margin-top: 20px; }
+      .footer-social a {
+        display: inline-block;
+        margin: 0 10px;
+        font-size: 24px;
+        color: #333;
+        transition: color 0.3s ease;
+      }
+      .footer-social a:hover { color: #fd792e; }
+
+      /* Toggle Theme Button Style */
+      .theme-toggle-btn {
+        background: transparent;
+        border: none;
+        font-size: 26px;
+        cursor: pointer;
+        outline: none;
+        margin-left: 16px;
+        color: #fd792e;
+        transition: transform 0.1s;
+      }
+      .theme-toggle-btn:active {
+        transform: scale(1.15);
+      }
+
+      /* Spacer pentru navbar fix, după bara text mișcător */
+      .spacer-navbar {
+        height: 87px; /* înălțimea combinată a barei text + navbar */
+      }
+    </style>
 </head>
 <body>
 
-    <header class="navbar">
-        <div class="logo">
-            <i class="fa-solid fa-book-open" style="color: #fd973d;"></i> eLearning CUTM
-        </div>
-        <nav class="nav-links">
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="file:///C:/Users/user/Desktop/courses/index.html">Courses</a></li> <!-- Referință către index.html -->
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Page</a></li>
-                <li><a href="#">LearnPress Add-On</a></li>
-                <li><a href="#">Premium Theme</a></li>
-                <li><a href="#">Login / Register</a></li>
-            </ul>
-        </nav>
-        <div class="search-icon">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" class="search-box" id="search-box" placeholder="Search...">
-        </div>
-    </header>
+  <!-- Bara text mișcător sus -->
+  <div class="marquee-container" aria-label="Scrolling announcement">
+    <div class="marquee-content" role="marquee" aria-live="off">
+      Boost your future. <i class="fa-solid fa-chart-simple"></i> eLearning CUTM <i class="fa-solid fa-arrow-up-right-from-square"></i> – learn anytime, anywhere. <i class="fa-solid fa-chart-simple"></i> Study smart, lead strong.
+      &nbsp;&nbsp;&nbsp;
+      Boost your future. <i class="fa-solid fa-chart-simple"></i> eLearning CUTM <i class="fa-solid fa-arrow-up-right-from-square"></i> – learn anytime, anywhere. <i class="fa-solid fa-chart-simple"></i> Study smart, lead strong.
+    </div>
+  </div>
 
-    <section id="courses-section" class="image-section">
-        <img src="https://media-hosting.imagekit.io/d1d91d53a9714be3/New%20Project%20(1).png?Expires=1841315264&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=LnEnOWw0lndjgtXoEUKqnFdhc4Of0AL1koTTMhss-foN1RHBF9-m13qaoN9S7uNknRujQT5eE1800u2hErMnXArdzE3KZqeoNTFCdDs39v88zNlaglfe8X8jTOw1~upJK~sLptxujpha3aA6LynAiDgekV-JI034WwqDYf1Y4aavjdMgAV6SNjSNyRp6YQXVIpN71skhhZe4CYGySpRZItFCWZGqaUfBn8IvsO5bId4SSxAn92wgVmZ9k-Ldfcn0Wr2Gbf6xzC0lO9HeRDPKuGJugzJy0KPbPhnDf5vA1Aw-QJLkQBUVyaYofJepD3aDiXOOIjnTPtWPYXRfZqnBJg__" alt="eLearning Image">
-        <div class="text-overlay">
-            <h1>Build Skills With Online Course</h1>
-            <p>We denounce with righteous indignation and dislike men who are so beguiled and demoralized that cannot trouble</p>
-            <a href="#" class="btn-post-comment">Post Comment</a>
-        </div>
-    </section>
-
-    <div class="container">
-        <div class="category-heading">
-            <h2>Top Categories</h2>
-            <p>Explore our Popular Categories</p>
-        </div>
-        <div class="category-container" id="category-container">
-            <div class="category-item" data-category="1">
-                <i class="fa-solid fa-palette" style="color: #fd992f;"></i>
-                <h3>Art & Design</h3>
-                <p>38 Courses</p>
-            </div>
-            <div class="category-item" data-category="2">
-                <i class="fa-solid fa-laptop-code"></i>
-                <h3>Development</h3>
-                <p>38 Courses</p>
-            </div>
-            <div class="category-item" data-category="3">
-                <i class="fa-solid fa-comment-dots"></i>
-                <h3>Communication</h3>
-                <p>38 Courses</p>
-            </div>
-            <div class="category-item" data-category="4">
-                <i class="fa-solid fa-video"></i>
-                <h3>Videography</h3>
-                <p>38 Courses</p>
-            </div>
-            <div class="category-item" data-category="5">
-                <i class="fa-solid fa-camera"></i>
-                <h3>Photography</h3>
-                <p>38 Courses</p>
-            </div>
-            <div class="category-item" data-category="6">
-                <i class="fa-solid fa-chart-line"></i>
-                <h3>Marketing</h3>
-                <p>38 Courses</p>
-            </div>
-            <div class="category-item" data-category="7">
-                <i class="fa-solid fa-pencil-alt"></i>
-                <h3>Content Writing</h3>
-                <p>38 Courses</p>
-            </div>
-            <div class="category-item" data-category="8">
-                <i class="fa-solid fa-money-bill-wave"></i>
-                <h3>Finance</h3>
-                <p>38 Courses</p>
-            </div>
-            <div class="category-item" data-category="9">
-                <i class="fa-solid fa-flask"></i>
-                <h3>Science</h3>
-                <p>38 Courses</p>
-            </div>
-            <div class="category-item" data-category="10">
-                <i class="fa-solid fa-network-wired"></i>
-                <h3>Network</h3>
-                <p>38 Courses</p>
-            </div>
-        </div>
-
-        <div class="button-container">
-            <button class="all-categories-btn">All Categories</button>
-        </div>
+  <!-- Navbar fixat sub bara text mișcător -->
+  <header class="navbar">
+    <div class="logo">
+      <i class="fa-solid fa-book-open"></i> eLearning CUTM
+    </div>
+    <nav class="nav-links">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="file:///C:/Users/user/Desktop/courses/index.html">Courses</a></li>
+        <li><a href="file:///C:/Users/user/Desktop/Blog/index.html">Blog</a></li>
+        <li><a href="file:///C:/Users/user/Desktop/Our%20Team/index.html">Our Team</a></li>
+        <li><a href="file:///C:/Users/user/Desktop/Resources/index.html">Resources</a></li>
+        <li><a href="#">Live Support</a></li>
+        <li class="dropdown">
+          <a href="#">Informații</a>
+          <div class="dropdown-content">
+            <a href="#">Despre Platformă</a>
+            <a href="#">Misiune</a>
+            <a href="#">Cum Funcționează</a>
+            <a href="file:///C:/Users/user/Desktop/Terms%20and%20conditions/index.html">Termeni și Condiții</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <div class="search-icon">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" class="search-box" id="search-box" placeholder="Search..." />
     </div>
 
-    <footer>
+    <!-- Un singur buton, iconița se schimbă dinamic -->
+    <button id="theme-toggle" class="theme-toggle-btn" aria-label="Schimbă tema">
+      <i id="theme-icon" class="fa-solid fa-moon"></i>
+    </button>
+
+    <!-- User menu (Profile Bar) -->
+    <div class="user-menu">
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+        alt="Profil Utilizator"
+        class="profile-icon"
+        onclick="toggleUserDropdown()"
+      />
+      <div class="dropdown-menu" id="userDropdown">
+        <a href="#"><i class="fa-solid fa-house-user menu-icon" style="color: #000000;"></i> Acasă</a>
+        <a href="#"><i class="fa-solid fa-user menu-icon" style="color: #000000;"></i> Profil</a>
+        <a href="#"><i class="fa-solid fa-pencil menu-icon" style="color: #000000;"></i> Experiență</a>
+        <a href="#"><i class="fa-solid fa-cart-shopping menu-icon" style="color: #000000;"></i> Plăți</a>
+        <a href="#"><i class="fa-solid fa-calendar menu-icon" style="color: #000000;"></i> Evenimente</a>
+        <a href="file:///C:/Users/user/Desktop/Practica_Traian_Boboc-main/Practica_Traian_Boboc-main/index.html"><i class="fa-solid fa-right-from-bracket menu-icon" style="color: #000000;"></i> Deconectare</a>
+        <a href="#"><i class="fa-solid fa-gear menu-icon" style="color: #000000;"></i> Setări</a>
+      </div>
+    </div>
+
+        <!-- Meniu de selecție a limbii -->
+        <div class="language-select">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg/1200px-Flag_of_the_United_Kingdom_%281-2%29.svg.png"
+            alt="English"
+          />
+          <div class="language-options">
+            <a href="#">English</a>
+            <a href="#">Русский</a>
+            <a href="#">Română</a>
+          </div>
+        </div>
+      </header>
+    
+      <!-- Spacer pentru navbar fix -->
+      <div class="spacer-navbar"></div>
+    
+      <!-- Restul conținutului paginii -->
+      <section id="courses-section" class="image-section">
+        <img
+          src="https://media-hosting.imagekit.io/d1d91d53a9714be3/New%20Project%20(1).png?Expires=1841315264&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=LnEnOWw0lndjgtXoEUKqnFdhc4Of0AL1koTTMhss-foN1RHBF9-m13qaoN9S7uNknRujQT5eE1800u2hErMnXArdzE3KZqeoNTFCdDs39v88zNlaglfe8X8jTOw1~upJK~sLptxujpha3aA6LynAiDgekV-JI034WwqDYf1Y4aavjdMgAV6SNjSNyRp6YQXVIpN71skhhZe4CYGySpRZItFCWZGqaUfBn8IvsO5bId4SSxAn92wgVmZ9k-Ldfcn0Wr2Gbf6xzC0lO9HeRDPKuGJugzJy0KPbPhnDf5vA1Aw-QJLkQBUVyaYofJepD3aDiXOOIjnTPtWPYXRfZqnBJg__"
+          alt="eLearning Image"
+        />
+        <div class="text-overlay">
+          <h1>Build Skills With Online Course</h1>
+          <p>
+            We denounce with righteous indignation and dislike men who are so
+            beguiled and demoralized that cannot trouble
+          </p>
+          <a href="#" class="btn-post-comment">Post Comment</a>
+        </div>
+      </section>
+    
+      <div class="container">
+        <div class="category-heading">
+          <h2>Top Categories</h2>
+          <p>Explore our Popular Categories</p>
+        </div>
+        <div class="category-container" id="category-container">
+          <div class="category-item" data-category="1">
+            <i class="fa-solid fa-palette" style="color: #fd992f;"></i>
+            <h3>Art & Design</h3>
+            <p>38 Courses</p>
+          </div>
+          <div class="category-item" data-category="2">
+            <i class="fa-solid fa-laptop-code"></i>
+            <h3>Development</h3>
+            <p>38 Courses</p>
+          </div>
+          <div class="category-item" data-category="3">
+            <i class="fa-solid fa-comment-dots"></i>
+            <h3>Communication</h3>
+            <p>38 Courses</p>
+          </div>
+          <div class="category-item" data-category="4">
+            <i class="fa-solid fa-video"></i>
+            <h3>Videography</h3>
+            <p>38 Courses</p>
+          </div>
+          <div class="category-item" data-category="5">
+            <i class="fa-solid fa-camera"></i>
+            <h3>Photography</h3>
+            <p>38 Courses</p>
+          </div>
+          <div class="category-item" data-category="6">
+            <i class="fa-solid fa-chart-line"></i>
+            <h3>Marketing</h3>
+            <p>38 Courses</p>
+          </div>
+          <div class="category-item" data-category="7">
+            <i class="fa-solid fa-pencil-alt"></i>
+            <h3>Content Writing</h3>
+            <p>38 Courses</p>
+          </div>
+          <div class="category-item" data-category="8">
+            <i class="fa-solid fa-money-bill-wave"></i>
+            <h3>Finance</h3>
+            <p>38 Courses</p>
+          </div>
+          <div class="category-item" data-category="9">
+            <i class="fa-solid fa-flask"></i>
+            <h3>Science</h3>
+            <p>38 Courses</p>
+          </div>
+          <div class="category-item" data-category="10">
+            <i class="fa-solid fa-network-wired"></i>
+            <h3>Network</h3>
+            <p>38 Courses</p>
+          </div>
+        </div>
+    
+        <div class="button-container">
+          <button class="all-categories-btn">All Categories</button>
+        </div>
+    
+        <!-- Buton Moldova Europeană -->
+        <a
+          href="https://moldovaeuropeana.md/"
+          target="_blank"
+          class="moldova-eu-button"
+        >
+          <img
+            src="https://media-hosting.imagekit.io/d16a3f1e71934e14/22.png?Expires=1841817231&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=BipreBAhbfftND6hDZ~4pTzQvrHM7B5dwD7fAzGB0X2pa~tcdFyyvki7bXKwxoLqC~eUvvOfhAk82jt5A4uesFnv9NI~~hTJgGh1-rM7fBu865uCurJ4m7bZG2qvz5NjIr2C1F8Tl7MevBTDZk8AB-5qsxOgNUG79LZBO6aaE465E8Ihp9BKxOIWlVOpdFo~EJ7xawAh3qqFe2efJcdTtGUMJQ~NHichKx904926mTQQPu~Mm0VopjoThjSuz~tJrwQV-gBzAAReQuePwgqziuC46x6tR7P3rmHis4Ak2Lerh0MDri9P9MIVU2bB0fAE1O36d0WJepL1R--A98jlWA__"
+            alt="Moldova Europeană"
+          />
+        </a>
+      </div>
+    
+      <footer>
         <div class="footer-container">
-            <div class="footer-left">
-                <div class="logo">
-                    <i class="fa-solid fa-book-open" style="color: #fda140;"></i>
-                    <span>eLearning CUTM</span>
-                </div>
-                <p>
-                    eLearning CUTM<br>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
+          <div class="footer-left">
+            <div class="logo">
+              <i class="fa-solid fa-book-open" style="color: #fda140;"></i>
+              <span>eLearning CUTM</span>
             </div>
-            <div class="footer-right">
-                <div class="footer-links">
-                    <h3>GET HELP</h3>
-                    <ul>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">Latest Articles</a></li>
-                        <li><a href="#">FAQ</a></li>
-                    </ul>
-                </div>
-                <div class="footer-programs">
-                    <h3>PROGRAMS</h3>
-                    <ul>
-                        <li><a href="#">Art & Design</a></li>
-                        <li><a href="#">Business</a></li>
-                        <li><a href="#">IT & Software</a></li>
-                        <li><a href="#">Languages</a></li>
-                        <li><a href="#">Programming</a></li>
-                    </ul>
-                </div>
-                <div class="footer-contact">
-                    <h3>CONTACT US</h3>
-                    <p>Address: 123, Strada Unirii, Chișinău, Republic of Moldova</p>
-                    <p>Tel: +373 2500-567-8988</p>
-                    <p>Email: supportims@gmail.com</p>
-                </div>
+            <p>
+              eLearning CUTM<br />
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+          <div class="footer-right">
+            <div class="footer-links">
+              <h3>GET HELP</h3>
+              <ul>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Latest Articles</a></li>
+                <li><a href="#">FAQ</a></li>
+              </ul>
             </div>
+            <div class="footer-programs">
+              <h3>PROGRAMS</h3>
+              <ul>
+                <li><a href="#">Art & Design</a></li>
+                <li><a href="#">Business</a></li>
+                <li><a href="#">IT & Software</a></li>
+                <li><a href="#">Languages</a></li>
+                <li><a href="#">Programming</a></li>
+              </ul>
+            </div>
+            <div class="footer-contact">
+              <h3>CONTACT US</h3>
+              <p>Address: 123, Strada Unirii, Chișinău, Republic of Moldova</p>
+              <p>Tel: +373 2500-567-8988</p>
+              <p>Email: supportims@gmail.com</p>
+            </div>
+          </div>
         </div>
         <div class="footer-bottom">
-            <div class="footer-social">
-                <a href="#" class="social-icon"><i class="fa-brands fa-facebook"></i></a>
-                <a href="#" class="social-icon"><i class="fa-brands fa-pinterest"></i></a>
-                <a href="#" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
-                <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
-            </div>
+          <div class="footer-social">
+            <a href="#" class="social-icon"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#" class="social-icon"><i class="fa-brands fa-pinterest"></i></a>
+            <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
+          </div>
         </div>
-    </footer>
-
-    <script src="script.js"></script>
-</body>
-</html>
+      </footer>
+    
+      <script>
+        // Tema light/dark - Un singur buton și iconiță se schimbă dinamic
+        const btnTheme = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        function setTheme(mode) {
+          if (mode === 'dark') {
+            document.body.classList.add('dark-theme');
+            localStorage.setItem('theme', 'dark');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+          } else {
+            document.body.classList.remove('dark-theme');
+            localStorage.setItem('theme', 'light');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+          }
+        }
+        // Toggle la click pe buton
+        btnTheme.addEventListener('click', () => {
+          if (document.body.classList.contains('dark-theme')) {
+            setTheme('light');
+          } else {
+            setTheme('dark');
+          }
+        });
+        // La încărcare pagină setează tema și iconița corectă
+        if (localStorage.getItem('theme') === 'dark') {
+          setTheme('dark');
+        } else {
+          setTheme('light');
+        }
+    
+        // Dropdown profil
+        function toggleUserDropdown() {
+          const dd = document.getElementById("userDropdown");
+          dd.style.display = dd.style.display === "block" ? "none" : "block";
+        }
+        document.addEventListener("click", function(e) {
+          const target = e.target;
+          if (!target.closest('.user-menu')) {
+            document.getElementById("userDropdown").style.display = "none";
+          }
+        });
+      </script>
+    </body>
+    </html>
+    
